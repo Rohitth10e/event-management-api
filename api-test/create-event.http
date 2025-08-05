@@ -1,0 +1,8 @@
+POST http://localhost:8081/events
+content-type: application/json
+
+{
+    "NAME":"Baby naming ceremony",
+    "DESCRIPTION":"naming ceremony of baby",
+    "LOCATION":"M G Road, Tumkuru"
+}
