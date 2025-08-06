@@ -11,6 +11,9 @@
 # Test binary, built with `go test -c`
 *.test
 
+# db
+.db
+api.db
 # Code coverage profiles and other test artifacts
 *.out
 coverage.*
@@ -28,5 +31,5 @@ go.work.sum
 .env
 
 # Editor/IDE
-# .idea/
-# .vscode/
+ .idea/
+ .vscode/

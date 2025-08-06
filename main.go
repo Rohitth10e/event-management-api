@@ -2,7 +2,7 @@ package main
 
 import (
 	"event-management-api/db"
-	"event-management-api/routes"
+	"event-management-api/routes/events"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func main() {
 	})
 
 	// event-routes
-	routes.RegisterRoutes(server)
+	events.RegisterRoutes(server)
 
 	// port: 8081
 	server.Run(":8081")

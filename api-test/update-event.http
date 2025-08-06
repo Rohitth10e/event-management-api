@@ -1,0 +1,9 @@
+PUT http://localhost:8081/events/1
+content-type: application/json
+
+{
+  "NAME":"Marraige",
+  "DESCRIPTION":"new desc",
+  "LOCATION":"M G Road, Tumkuru",
+  "DATE": "0001-01-01T00:00:00Z"
+}
