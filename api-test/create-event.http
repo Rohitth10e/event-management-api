@@ -1,5 +1,7 @@
 POST http://localhost:8081/events
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0aGVzaHdhci5zQGdtYWlsLmNvbSIsImV4cCI6MTc1NDg2NjI0MCwidXNlcklkIjowfQ.JQJc_9xN2O8m-NQKOjhxIsN1jTdueTwOLepS6DbTIHc
+
 
 {
     "NAME":"Baby naming ceremony",

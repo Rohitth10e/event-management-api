@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"event-management-api/models"
+	"event-management-api/utils"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -20,6 +21,20 @@ func getEvents(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
+
+	token := context.Request.Header.Get("Authorization")
+	if token == "" {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+
+	isValid := utils.VerifyToken(token)
+
+	if !isValid {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+
 	var event models.Event
 	err := context.ShouldBind(&event)
 
@@ -27,7 +42,7 @@ func createEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	
+
 	event.USER_ID = 1
 	event.SAVE()
 

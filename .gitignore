@@ -12,8 +12,8 @@
 *.test
 
 # db
-.db
-api.db
+*.db
+
 # Code coverage profiles and other test artifacts
 *.out
 coverage.*
