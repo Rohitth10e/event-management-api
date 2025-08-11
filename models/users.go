@@ -68,8 +68,7 @@ func (u *Users) ValidateUserLogin() error {
 	query := "SELECT id,email, password FROM users WHERE email = ?"
 	row := db.DB.QueryRow(query, u.EMAIL)
 	var retrievedUser, hashedPassword string
-	var retrievedUserId int64
-	err := row.Scan(&retrievedUserId, &retrievedUser, &hashedPassword)
+	err := row.Scan(&u.ID, &retrievedUser, &hashedPassword)
 	if err != nil {
 		return err
 	}

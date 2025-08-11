@@ -3,6 +3,7 @@ package main
 import (
 	"event-management-api/db"
 	"event-management-api/routes/events"
+	"event-management-api/routes/registrations"
 	"event-management-api/routes/users"
 	"fmt"
 
@@ -23,6 +24,8 @@ func main() {
 	events.RegisterEventRoutes(server)
 	// user-routes
 	users.RegisterUserRoutes(server)
+	// registration-route
+	registrations.RegisterRegistrationRoute(server)
 
 	// port: 8081
 	server.Run(":8081")

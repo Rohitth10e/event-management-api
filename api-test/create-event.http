@@ -1,10 +1,13 @@
 POST http://localhost:8081/events
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNuZWhhQGdtYWlsLmNvbSIsImV4cCI6MTc1NDkwNDczMywidXNlcklkIjowfQ.fjGZ_32ewy-3yl4rqt7Ee2P0_tkbwR2wonC675w966U
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNuZWhhQGdtYWlsLmNvbSIsImV4cCI6MTc1NDkzMzEwOSwidXNlcklkIjoyfQ.RGhA0XuSZhokuWdpjipuHx9jsdLYJ2wNrWhDRdXKZso
+
+
+
 
 
 {
-  "NAME": "AI & ML Workshop",
-  "DESCRIPTION": "Hands-on workshop on building intelligent systems.",
-  "LOCATION": "IISc Campus, Bengaluru"
+  "NAME": "Open Source Hackathon",
+  "DESCRIPTION": "Collaborative coding event focused on open source contributions.",
+  "LOCATION": "Remote"
 }

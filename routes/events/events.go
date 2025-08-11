@@ -21,32 +21,33 @@ func getEvents(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-
 	token := context.Request.Header.Get("Authorization")
+	fmt.Println("Authorization Header:", context.Request.Header.Get("Authorization"))
 	if token == "" {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
 		return
 	}
+	if len(token) > 7 && token[:7] == "Bearer " {
+		token = token[7:]
+	}
 
-	isValid, userId := utils.VerifyToken(token)
-
-	if !isValid {
-		context.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+	userId, err := utils.VerifyToken(token)
+	if err != nil || userId == 0 {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
 		return
 	}
 
 	var event models.Event
-	err := context.ShouldBind(&event)
-
-	if err != nil {
-		context.JSON(http.StatusBadRequest, err.Error())
+	if err := context.ShouldBind(&event); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	event.USER_ID = userId
+	uid := context.GetInt64("userId")
+	event.USER_ID = uid
 	event.SAVE()
 
-	context.JSON(http.StatusAccepted, gin.H{
+	context.JSON(http.StatusCreated, gin.H{
 		"message": "Event created",
 		"event":   event,
 	})
@@ -81,10 +82,15 @@ func updateEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
-
-	_, err = models.GetEventById(evtId)
+	uid := context.GetInt64("userId")
+	event, err := models.GetEventById(evtId)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{"message": "Event not found"})
+		return
+	}
+
+	if event.USER_ID != uid {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
 		return
 	}
 
@@ -113,9 +119,14 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(evtId)
+	uid := context.GetInt64("userId")
+	event, err := models.GetEventById(evtId)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{"message": "Event not found"})
+	}
+	if event.USER_ID != uid {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
+		return
 	}
 
 	var deletedEvent models.Event

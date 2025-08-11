@@ -1,9 +1,11 @@
-PUT http://localhost:8081/events/1
+PUT http://localhost:8081/events/7
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNuZWhhQGdtYWlsLmNvbSIsImV4cCI6MTc1NDkzNjU1NiwidXNlcklkIjoyfQ.ipZjuysgd2K_GSStZhgiUGZt7NvHCGwEkex9_TxZWdc
+
 
 {
-  "NAME":"Marraige",
-  "DESCRIPTION":"new desc",
-  "LOCATION":"M G Road, Tumkuru",
+  "NAME": "Open Source Hackathon",
+  "DESCRIPTION": "Collaborative coding event focused on open source contributions.",
+  "LOCATION": "Onsite",
   "DATE": "0001-01-01T00:00:00Z"
 }
