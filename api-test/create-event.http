@@ -1,10 +1,10 @@
 POST http://localhost:8081/events
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0aGVzaHdhci5zQGdtYWlsLmNvbSIsImV4cCI6MTc1NDg2NjI0MCwidXNlcklkIjowfQ.JQJc_9xN2O8m-NQKOjhxIsN1jTdueTwOLepS6DbTIHc
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNuZWhhQGdtYWlsLmNvbSIsImV4cCI6MTc1NDkwNDczMywidXNlcklkIjowfQ.fjGZ_32ewy-3yl4rqt7Ee2P0_tkbwR2wonC675w966U
 
 
 {
-    "NAME":"Baby naming ceremony",
-    "DESCRIPTION":"naming ceremony of baby",
-    "LOCATION":"M G Road, Tumkuru"
+  "NAME": "AI & ML Workshop",
+  "DESCRIPTION": "Hands-on workshop on building intelligent systems.",
+  "LOCATION": "IISc Campus, Bengaluru"
 }
