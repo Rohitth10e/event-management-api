@@ -1,33 +1,33 @@
 # Event Management API
 
-A simple REST API built using **Go (Golang)**, **Gin** framework, and **JWT authentication** for managing events and users.
+A simple and secure REST API built using **Go (Golang)**, the **Gin** framework, and **JWT authentication** for managing events and users.
 
 ## Features
 
-* User registration & login
-* JWT-based authentication
-* Create and manage events
-* Token verification middleware
+* User registration and login
+* JWT-based authentication with token expiry
+* Event creation, listing, and management
+* Middleware for token verification and route protection
+* Modular code structure for scalability
 
 ## Tech Stack
 
 * **Go** (Golang)
 * **Gin** HTTP Web Framework
 * **JWT** for authentication
+* **MySQL** (or compatible) database
 
 ## Project Structure
 
 ```
 .
-├── main.go
-├── controllers
-│   ├── userController.go
-│   ├── eventController.go
-├── models
-│   ├── users.go
-│   ├── event.go
-├── utils
-│   ├── token.go
+├── main.go              # Application entry point
+├── api-test             # Postman/test collections
+├── db                   # Database connection and setup
+├── middlewares          # Authentication and other middlewares
+├── models               # Database models
+├── routes               # API route definitions
+├── utils                # Helper utilities (JWT, password hashing)
 └── README.md
 ```
 
@@ -36,7 +36,7 @@ A simple REST API built using **Go (Golang)**, **Gin** framework, and **JWT auth
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/yourusername/event-management-api.git
+git clone https://github.com/Rohitth10e/event-management-api.git
 cd event-management-api
 ```
 
@@ -46,17 +46,17 @@ cd event-management-api
 go mod tidy
 ```
 
-3. **Configure Environment Variables:**
+3. **Configure environment variables:**
 
-    * Set your database connection string.
-    * Set your `JWT_SECRET_KEY`.
+   * Set your database connection string in `db/connection.go`.
+   * Update `JWT_SECRET_KEY` in `.env` or `utils/token.go`.
 4. **Run the server:**
 
 ```bash
 go run main.go
 ```
 
-5. **API runs on:**
+5. API available at:
 
 ```
 http://localhost:8081
@@ -64,17 +64,16 @@ http://localhost:8081
 
 ## Authentication Flow
 
-1. User logs in using `/login` endpoint.
-2. Server returns a **JWT token**.
-3. Client sends this token in the **Authorization header** as `Bearer <token>` for protected routes.
+1. **Signup:** POST `/signup` with email and password.
+2. **Login:** POST `/login` to receive JWT token.
+3. **Use Token:** Include `Authorization: Bearer <token>` for protected endpoints.
+4. Token expires in **2 hours** (configurable in `utils/token.go`).
 
 ## Endpoints
 
 ### User
 
-**POST /login**
-
-* Request:
+**POST /signup**
 
 ```json
 {
@@ -83,68 +82,63 @@ http://localhost:8081
 }
 ```
 
-* Response:
+**POST /login**
 
 ```json
 {
-  "token": "<jwt_token>"
+  "EMAIL": "user@example.com",
+  "PASSWORD": "password123"
 }
 ```
 
-### Events
+*Response:* `{ "token": "<jwt_token>" }`
 
-**POST /events** *(Protected)*
+### Events (Protected)
 
-* Headers:
-
-```
-Authorization: Bearer <jwt_token>
-```
-
-* Request:
+**POST /events**
+Headers: `Authorization: Bearer <jwt_token>`
 
 ```json
 {
-  "title": "My Event",
-  "description": "An awesome event",
-  "date": "2025-08-11"
+  "NAME": "My Event",
+  "DESCRIPTION": "An awesome event",
+  "LOCATION": "Bangalore"
 }
 ```
 
-* Response:
+## Notes for Frontend Developers
 
-```json
-{
-  "message": "Event created",
-  "event": {
-    "title": "My Event",
-    "description": "An awesome event",
-    "date": "2025-08-11"
-  }
-}
-```
-
-## Token Utility Functions
-
-* `GenerateToken(email string, id int64)`: Creates a JWT token.
-* `VerifyToken(tokenString string)`: Verifies the token's validity.
-
-## Notes
-
-* Replace `secretKey` in `utils/token.go` with a secure value.
-* Ensure your database is configured before running.
-* Tokens expire after 2 hours (configurable).
+* Always send the token in the `Authorization` header for protected routes.
+* Token expiry: 2 hours.
+* Date fields should follow ISO 8601 (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm:ssZ`).
+* For local testing, configure CORS in the backend if needed.
+* Example workflow: User signs up → logs in → stores JWT in secure storage (not localStorage) → includes it in all API requests.
 
 ## Contributing
 
-Contributions are welcome! To contribute:
+We welcome contributions! To contribute:
 
-1. Fork this repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit and push your changes.
-4. Open a pull request describing your changes.
+1. **Fork** the repository.
+2. Create a feature branch: `git checkout -b feature-name`.
+3. Commit changes with a descriptive message: `git commit -m "Description of changes"`.
+4. Push your branch: `git push origin feature-name`.
+5. Open a **Pull Request** explaining your changes.
 
-Please follow coding standards and include tests where applicable.
+### Contribution Guidelines
+
+* Write clear, concise commit messages.
+* Follow Go best practices and code formatting (`go fmt`).
+* Update documentation where necessary.
+* Add or update tests for any changes.
+
+## Issues
+
+* Report bugs or request features via the GitHub **Issues** tab.
+* Include:
+
+  * Steps to reproduce
+  * Expected vs actual behavior
+  * Environment details (OS, Go version, etc.)
 
 ## License
 
